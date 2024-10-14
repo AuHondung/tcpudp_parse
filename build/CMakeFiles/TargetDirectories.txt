@@ -1,0 +1,6 @@
+/home/max/Documents/01_Project/18_tcpudp_demo/build/CMakeFiles/udp_client.dir
+/home/max/Documents/01_Project/18_tcpudp_demo/build/CMakeFiles/udp_server.dir
+/home/max/Documents/01_Project/18_tcpudp_demo/build/CMakeFiles/tcp_parse.dir
+/home/max/Documents/01_Project/18_tcpudp_demo/build/CMakeFiles/pcap_udp.dir
+/home/max/Documents/01_Project/18_tcpudp_demo/build/CMakeFiles/edit_cache.dir
+/home/max/Documents/01_Project/18_tcpudp_demo/build/CMakeFiles/rebuild_cache.dir
