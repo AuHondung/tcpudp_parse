@@ -18,12 +18,12 @@ void packet_handler(u_char *user_data, const struct pcap_pkthdr *pkthdr, const u
     struct udphdr *udp_header = (struct udphdr *)(packet + len + 4 + ip_header->ip_hl * 4); // 跳过IP头部 + vlen头部（4）
 
     // 打印源IP和目的IP地址
-    printf("Source IP: %s\n", inet_ntoa(ip_header->ip_src));
-    printf("Destination IP: %s\n", inet_ntoa(ip_header->ip_dst));
+    // printf("Source IP: %s\n", inet_ntoa(ip_header->ip_src));
+    // printf("Destination IP: %s\n", inet_ntoa(ip_header->ip_dst));
 
     // 打印源端口和目的端口
-    printf("Source Port: %d\n", ntohs(udp_header->uh_sport));
-    printf("Destination Port: %d\n", ntohs(udp_header->uh_dport));
+    // printf("Source Port: %d\n", ntohs(udp_header->uh_sport));
+    // printf("Destination Port: %d\n", ntohs(udp_header->uh_dport));
 
     // 获取UDP负载数据长度
     int udp_payload_len = ntohs(udp_header->uh_ulen) - sizeof(struct udphdr);
