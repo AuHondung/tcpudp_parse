@@ -7,6 +7,7 @@
 #include <netinet/ip.h>
 #include <netinet/udp.h>
 #include <net/ethernet.h> // 包含以太网头部定义
+#include <chrono> 
 
 // 回调函数，当捕获到数据包时会被调用
 void packet_handler(u_char *user_data, const struct pcap_pkthdr *pkthdr, const u_char *packet) {
@@ -77,6 +78,7 @@ int main() {
     // pcap_loop(handle, 0, packet_handler, NULL);
 
     while (true) {
+        auto start = std::chrono::high_resolution_clock::now();
         struct pcap_pkthdr header;    // 数据包头
         const u_char *packet = pcap_next(handle, &header);  // 捕获的数据包
 
@@ -95,13 +97,13 @@ int main() {
         // 获取 UDP 头部
         struct udphdr *udp_header = (struct udphdr *)(packet + len + 4 + ip_header->ip_hl * 4); // 跳过IP头部
 
-        // 打印源IP和目的IP地址
-        printf("Source IP: %s\n", inet_ntoa(ip_header->ip_src));
-        printf("Destination IP: %s\n", inet_ntoa(ip_header->ip_dst));
+        // // 打印源IP和目的IP地址
+        // printf("Source IP: %s\n", inet_ntoa(ip_header->ip_src));
+        // printf("Destination IP: %s\n", inet_ntoa(ip_header->ip_dst));
 
-        // 打印源端口和目的端口
-        printf("Source Port: %d\n", ntohs(udp_header->uh_sport));
-        printf("Destination Port: %d\n", ntohs(udp_header->uh_dport));
+        // // 打印源端口和目的端口
+        // printf("Source Port: %d\n", ntohs(udp_header->uh_sport));
+        // printf("Destination Port: %d\n", ntohs(udp_header->uh_dport));
 
         // 获取UDP负载数据长度
         int udp_payload_len = ntohs(udp_header->uh_ulen) - sizeof(struct udphdr);
@@ -112,14 +114,17 @@ int main() {
         // 打印捕获到的数据包长度
         printf("Captured packet length: %d bytes\n", header.len);
 
-        // 打印UDP负载数据
-        printf("UDP Payload (%d bytes):\n", udp_payload_len);
-        for (int i = 0; i < udp_payload_len; i++) {
-            printf("%02x ", payload[i]); // 按16进制打印负载数据
-            if ((i + 1) % 16 == 0) printf("\n");
-        }
-
+        // // 打印UDP负载数据
+        // printf("UDP Payload (%d bytes):\n", udp_payload_len);
+        // for (int i = 0; i < udp_payload_len; i++) {
+        //     printf("%02x ", payload[i]); // 按16进制打印负载数据
+        //     if ((i + 1) % 16 == 0) printf("\n");
+        // }
+        auto end = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start).count();
+        std::cout << "Loop execution time: " << duration << " microseconds" << std::endl;
         printf("\n--------------------------------------------------\n");
+
     }
 
     // 关闭句柄
